@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "HarvestGuard-PK: District-Crop Yield Shock Forecasting Benchmark"
+version: 0.1.0
+date-released: 2026-11-10
+authors:
+  - name: "Masmatix Innovations Research"
+repository-code: "https://github.com/MHKhan50/harvestguard-pk-v0.1.0"
+license: MIT
+abstract: >-
+  A reproducible, leakage-safe benchmark for one-year-ahead district-crop yield
+  forecasting and yield-shock alert evaluation using Pakistan Bureau of Statistics
+  aggregate crop statistics. The repository includes a synthetic smoke-test panel;
+  it does not bundle or claim synthetic observations as official data.
+keywords:
+  - Pakistan
+  - crop yield
+  - food security
+  - forecasting
+  - conformal prediction

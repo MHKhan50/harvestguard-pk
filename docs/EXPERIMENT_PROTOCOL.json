@@ -1,0 +1,22 @@
+{
+  "protocol_version": "0.1.0",
+  "unit": "district_code x crop_id x fiscal_year",
+  "target": "yield_t_per_ha at target fiscal year t",
+  "features_must_use_years_strictly_before_target": true,
+  "minimum_prior_panel_observations": 3,
+  "temporal_split": {
+    "train_target_year_max": 2015,
+    "calibration_target_year_min": 2016,
+    "calibration_target_year_max": 2019,
+    "test_target_year_min": 2020,
+    "test_target_year_max": 2024
+  },
+  "models": ["persistence", "rolling_median_3", "pooled_ridge"],
+  "primary_forecast_metric": "log_yield_rmse",
+  "conformal_alpha_default": 0.1,
+  "yield_shock_definition": "target_yield <= 0.85 * median(last_three_prior_observed_yields)",
+  "bootstrap_unit": "district_crop_group",
+  "bootstrap_replicates_default": 300,
+  "random_seed_default": 17,
+  "synthetic_data_is_not_empirical": true
+}
