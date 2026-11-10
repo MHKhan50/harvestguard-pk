@@ -49,6 +49,7 @@ def run_experiment(input_csv: Union[str, Path], output_dir: Union[str, Path], al
 
     shock_actual = []
     shock_predicted = []
+    shock_persistence = []
     prediction_rows = []
     for index, row in enumerate(test):
         threshold = 0.85 * float(row["previous_median_yield"])
@@ -56,6 +57,7 @@ def run_experiment(input_csv: Union[str, Path], output_dir: Union[str, Path], al
         predicted_shock = ridge_yield[index] <= threshold
         shock_actual.append(actual_shock)
         shock_predicted.append(predicted_shock)
+        shock_persistence.append(math.exp(persistence_log[index]) <= threshold)
         prediction_rows.append({
             "district_code": row["district_code"],
             "district": row["district"],
@@ -97,6 +99,7 @@ def run_experiment(input_csv: Union[str, Path], output_dir: Union[str, Path], al
         "pooled_ridge_yield_scale_rmse_t_per_ha": regression_metrics(actual_yield, ridge_yield)["rmse"],
         "conformal_interval": interval,
         "yield_shock": classification_metrics(shock_actual, shock_predicted),
+        "yield_shock_persistence_alert": classification_metrics(shock_actual, shock_persistence),
         "ridge_minus_rolling_median_rmse_group_bootstrap_95pct": group_bootstrap_rmse_difference(test, ridge_predictions, rolling_median_log, seed=seed),
         "feature_names": FEATURE_NAMES,
         "interpretation": "Scores depend on the supplied input. Synthetic-input results are software smoke tests only, not empirical Pakistan findings.",

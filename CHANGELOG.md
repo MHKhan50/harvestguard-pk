@@ -1,9 +1,16 @@
 # Changelog
 
-## 0.1.0 — 2026-11-10
+## 0.2.0 (2026-11-10)
 
-- Initial research prototype for leakage-safe district-crop yield shock forecasting.
-- PBS-derived Parquet-to-CSV preparation command (optional DuckDB).
-- Lag-only pooled ridge, persistence and rolling-median baselines.
-- Split-conformal uncertainty interval and district-crop group bootstrap.
-- Synthetic-only smoke-test panel and standard-library unit tests.
+- `fetch-pbs` writes a provenance record (source URL, retrieval time, SHA-256, row counts).
+- Rows with missing area, production or yield are skipped instead of stopping the run.
+- Clearer error listing the columns found when the input schema does not match.
+- Persistence alerts reported next to ridge alerts for yield shocks.
+- New `report` command: per-crop and per-year error tables and two figures.
+- requirements.txt, pytest, author and ORCID metadata.
+
+## 0.1.0 (2026-11-10)
+
+- Leakage-safe lagged features, persistence and rolling-median baselines, pooled ridge.
+- Split-conformal interval and district-crop group bootstrap.
+- Synthetic smoke-test panel and unit tests.

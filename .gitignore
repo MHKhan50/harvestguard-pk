@@ -10,3 +10,14 @@ outputs/*
 !outputs/.gitkeep
 data/pbs_crop_panel.csv
 data/pbs_crop_panel.parquet
+data/*.source.parquet
+data/*.tmp
+.pytest_cache/
+outputs/synthetic/
+!outputs/pbs/
+outputs/pbs/*
+!outputs/pbs/metrics.json
+!outputs/pbs/run_metadata.json
+!outputs/pbs/report.md
+!outputs/pbs/report.json
+!outputs/pbs/figures/

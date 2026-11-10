@@ -3,7 +3,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from harvestguard_pk.data import parse_fiscal_year, read_panel_csv
+import json
+
+from harvestguard_pk.data import parse_fiscal_year, read_panel_csv, write_provenance
 
 
 class DataTests(unittest.TestCase):
@@ -44,3 +46,45 @@ class DataTests(unittest.TestCase):
                 writer.writerow(row)
             with self.assertRaisesRegex(ValueError, "Duplicate"):
                 read_panel_csv(path)
+
+    def test_missing_numeric_values_are_skipped_not_fatal(self):
+        fields = ["district_code", "district", "province", "crop_id", "crop", "fy", "area_000ha", "production_000t", "yield_t_per_ha"]
+        rows = [
+            ["001", "A", "Punjab", "1", "Wheat", "2000-01", "10", "20", "2"],
+            ["001", "A", "Punjab", "1", "Wheat", "2001-02", "", "", ""],
+            ["001", "A", "Punjab", "1", "Wheat", "2002-03", "10", "NA", "2"],
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "panel.csv"
+            with path.open("w", newline="") as handle:
+                writer = csv.writer(handle)
+                writer.writerow(fields)
+                writer.writerows(rows)
+            self.assertEqual(len(read_panel_csv(path)), 1)
+
+    def test_missing_column_error_lists_found_columns(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "panel.csv"
+            path.write_text("district,fy\nA,2000-01\n")
+            with self.assertRaisesRegex(ValueError, "Columns found: district, fy"):
+                read_panel_csv(path)
+
+    def test_provenance_record(self):
+        fields = ["district_code", "district", "province", "crop_id", "crop", "fy", "area_000ha", "production_000t", "yield_t_per_ha"]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source.parquet"
+            source.write_bytes(b"abc")
+            panel = root / "panel.csv"
+            with panel.open("w", newline="") as handle:
+                writer = csv.writer(handle)
+                writer.writerow(fields)
+                writer.writerow(["001", "A", "Punjab", "1", "Wheat", "2000-01", "10", "20", "2"])
+            record = json.loads(write_provenance(source, panel, "https://example.org/x.parquet").read_text())
+        self.assertEqual(record["source_sha256"], "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad")
+        self.assertEqual(record["valid_rows_after_filtering"], 1)
+        self.assertEqual(record["first_fiscal_year"], 2000)
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "harvestguard-pk"
-version = "0.1.0"
+version = "0.2.0"
 description = "Leakage-safe district-crop yield shock forecasting benchmark for Pakistan"
 readme = "README.md"
 requires-python = ">=3.9"
 license = {file = "LICENSE"}
-authors = [{name = "Masmatix Innovations Research"}]
+authors = [{name = "Muzammal Hussain"}]
 keywords = ["Pakistan", "agriculture", "crop-yield", "food-security", "machine-learning", "conformal-prediction"]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -25,6 +25,7 @@ dependencies = []
 
 [project.optional-dependencies]
 data = ["duckdb>=1.1,<2"]
+plot = ["matplotlib>=3.5,<3.10"]
 
 [project.scripts]
 harvestguard = "harvestguard_pk.cli:main"
@@ -34,3 +35,7 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

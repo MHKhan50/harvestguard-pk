@@ -1,8 +1,8 @@
-# HarvestGuard-PK v0.1.0
+# HarvestGuard-PK
 
 **Leakage-safe district-crop yield shock forecasting and uncertainty benchmark for Pakistan**
 
-> Research prototype. No predictive performance on official PBS data is claimed by this release. The bundled CSV is explicitly synthetic and is only for smoke tests and reproducibility checks.
+> The bundled CSV is synthetic and only for tests. Real-data results will be added below after the run on the PBS-derived panel; none are claimed yet.
 
 ## Research objective
 
@@ -24,80 +24,51 @@ Pakistan-specific research has also documented relationships between temperature
 
 These are hypotheses to test, not pre-asserted findings.
 
-## Technical contribution
+## Design
 
-- Strictly lagged feature construction: every predictor for target fiscal year *t* is calculated from observations with fiscal year `< t`.
-- District × crop panel formulation across multiple crops, not only wheat.
-- Forward temporal protocol: train targets through 2015, calibrate on 2016–2019, test on 2020–2024.
-- Lightweight pooled ridge implementation using only the Python standard library.
-- Split-conformal absolute-residual interval and group-level bootstrap interval for the difference in test RMSE (ridge minus rolling-median baseline).
-- Explicit handling of unlabelled crop placeholders and documented district/crop coverage gaps.
+- Every predictor for target fiscal year *t* comes from observations with fiscal year < *t*; all rows of a year are featurised before any of them enter the history.
+- One pooled model over district x crop panels for all crops, not wheat only.
+- Forward split by target year: train up to 2015, calibrate 2016 to 2019, test 2020 to 2024. The test years are not used for fitting or calibration.
+- Forecasters: persistence (last observed yield), median of the last three yields, and a pooled ridge regression on nine lagged features (standard library only).
+- Uncertainty: split-conformal interval on log yield (nominal 90%), and a bootstrap over district-crop groups for the ridge minus rolling-median RMSE difference.
+- Shock alerts: a shock is a yield at least 15% below the median of the previous three yields; ridge and persistence alerts are scored with precision, recall and F1.
 
-## Repository structure
+Details: [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md), protocol in [`docs/EXPERIMENT_PROTOCOL.json`](docs/EXPERIMENT_PROTOCOL.json), fields in [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md).
+
+## Run it (Python 3.9+)
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt && pip install -e .
+python -m pytest -q
+python -m harvestguard_pk.cli fetch-pbs --output data/pbs_crop_panel.csv
+python -m harvestguard_pk.cli run --input data/pbs_crop_panel.csv --output-dir outputs/pbs --alpha 0.10
+python -m harvestguard_pk.cli report --run-dir outputs/pbs
+```
+
+`fetch-pbs` downloads the Data Darbar Parquet extract of PBS crop statistics, converts it with DuckDB, validates it and writes `data/pbs_crop_panel.provenance.json` (URL, retrieval time, SHA-256, row counts). If the upstream schema changes, it stops and lists the columns it found. Rows with missing values or unlabelled crops are skipped; missing district-years are never filled with zero.
+
+`run` writes `metrics.json`, `test_predictions.csv` and `run_metadata.json`; `report` adds `report.md`, `report.json` and `figures/rmse_by_year.png`, `figures/rmse_by_crop.png`.
+
+Synthetic smoke run (no download): `sh examples/run_synthetic.sh`. Its numbers say nothing about Pakistan.
+
+## Results
+
+Pending: the real-data run on the PBS-derived panel has not been done yet. This section will hold the forecast table, conformal coverage, shock alert scores and the two figures from `outputs/pbs/`.
+
+## Limitations
+
+See [`docs/LIMITATIONS.md`](docs/LIMITATIONS.md): coverage gaps (for example AJK and GB districts are absent from the extract), district boundary and code changes over four decades, yield as an administrative aggregate, distribution shift between periods, one pooled model across very different crops, an operational shock threshold, and no weather or remote-sensing inputs.
+
+## Repository
 
 ```text
-harvestguard-pk-v0.1.0/
-├── data/                  # synthetic smoke-test CSV + data instructions
-├── docs/                  # methodology, protocol, data dictionary, limitations, sources
-├── examples/              # example experiment command
-├── src/harvestguard_pk/   # maintainable Python package
-├── tests/                 # standard-library unit tests
-├── CITATION.cff
-├── LICENSE
-└── pyproject.toml
+src/harvestguard_pk/   data, features, model, metrics, experiment, report, cli
+tests/                 unit and end-to-end tests (no network)
+data/                  synthetic test panel and notices
+docs/                  methodology, protocol, data dictionary, sources, limitations
+examples/              synthetic smoke run
 ```
-
-## Quick start (Python 3.9+; no mandatory third-party packages)
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install -e .
-python -m unittest discover -s tests -v
-python -m harvestguard_pk.cli generate-synthetic --output data/synthetic_crop_panel.csv --seed 17
-python -m harvestguard_pk.cli run --input data/synthetic_crop_panel.csv --output-dir outputs/synthetic --alpha 0.10
-```
-
-The synthetic experiment is a pipeline smoke test only. Do not cite its metrics as evidence about real Pakistani crop yields.
-
-## Prepare the official-source panel
-
-The PBS dashboard is the primary institutional source. For a reproducible bulk download, this project uses the Data Darbar machine-readable extract, which identifies PBS National Accounts crop statistics as its source and provides a Parquet file. The extract is a secondary packaging of official aggregate statistics, not a new PBS release.
-
-Install the one optional conversion dependency and fetch the Parquet into a normalized CSV:
-
-```bash
-python -m pip install -e '.[data]'
-python -m harvestguard_pk.cli fetch-pbs --output data/pbs_crop_panel.csv
-```
-
-Then run the actual-data experiment:
-
-```bash
-python -m harvestguard_pk.cli run --input data/pbs_crop_panel.csv --output-dir outputs/pbs --alpha 0.10
-```
-
-`fetch-pbs` downloads the source Parquet and uses optional DuckDB to convert it to CSV. The pipeline excludes rows whose crop label is an unlabelled placeholder, non-positive or non-finite area/yield values, and malformed fiscal-year labels. It does not fill missing district-years with zero.
-
-If the upstream URL or schema changes, the fetch step fails loudly; retain the source file and record its retrieval date/hash before publication. See `docs/SOURCES.md` and `docs/METHODOLOGY.md`.
-
-## Outputs
-
-The experiment writes:
-
-- `metrics.json` — split sizes, forecast metrics, conformal coverage/width and shock classification metrics;
-- `test_predictions.csv` — observed yield, baseline/model forecasts, interval and shock labels;
-- `run_metadata.json` — source path, run configuration and protocol version.
-
-Metrics are generated from the supplied input only. The repository release does not contain a verified run on the external PBS extract, so no real-data scores are asserted here.
-
-## Reproducibility and resource profile
-
-- Python 3.9+; required runtime dependencies: standard library only.
-- The official panel is approximately 747 KB in Parquet form according to the catalogue; optional DuckDB is used only for conversion.
-- Fixed default seed: 17.
-- No GPU, neural-network framework, database server or external API key required.
-- Unit tests use deterministic synthetic fixtures and do not require network access.
 
 ## Licensing
 
@@ -111,4 +82,4 @@ The model estimates district–crop yield from historical statistical panels. It
 
 ## Citation
 
-See `CITATION.cff` and `docs/VERIFICATION.md`. Cite PBS as the original statistical source and the Data Darbar extract as the machine-readable packaging when using that extract. Cite the specific release and retrieval date in any resulting paper or dataset card.
+See `CITATION.cff`. Cite PBS as the original statistical source and the Data Darbar extract as the machine-readable packaging when using that extract. Cite the specific release and retrieval date in any resulting paper or dataset card.

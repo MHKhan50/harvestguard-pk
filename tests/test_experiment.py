@@ -21,3 +21,20 @@ class ExperimentTests(unittest.TestCase):
             loaded = json.loads((root / "out" / "metrics.json").read_text())
             self.assertIn("conformal_interval", loaded)
             self.assertIn("yield_shock", loaded)
+
+
+class ReportTests(unittest.TestCase):
+    def test_report_after_run(self):
+        from harvestguard_pk.cli import main
+        from harvestguard_pk.report import build_report
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            panel = generate_synthetic_panel(root / "panel.csv", seed=17, districts=8)
+            main(["run", "--input", str(panel), "--output-dir", str(root / "out")])
+            report = build_report(root / "out")
+            self.assertGreater(report["test_rows"], 0)
+            self.assertEqual(len(report["by_year"]), 5)
+            self.assertTrue((root / "out" / "report.md").exists())
+            metrics = json.loads((root / "out" / "metrics.json").read_text())
+            self.assertIn("yield_shock_persistence_alert", metrics)
