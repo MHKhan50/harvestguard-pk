@@ -10,6 +10,7 @@ from .data import fetch_pbs_panel
 from .experiment import run_experiment
 from .report import build_report
 from .shift import run_shift
+from .diagnose import run_diagnose
 from .synthetic import generate_synthetic_panel
 
 
@@ -38,6 +39,11 @@ def build_parser() -> argparse.ArgumentParser:
     shift.add_argument("--no-clean", action="store_true", help="skip label cleaning (sensitivity run)")
     shift.add_argument("--seed", type=int, default=17)
 
+    diag = subparsers.add_parser("diagnose", help="exploratory: composition shift and province-wise intervals")
+    diag.add_argument("--input", required=True)
+    diag.add_argument("--output-dir", required=True)
+    diag.add_argument("--alpha", type=float, default=0.10)
+
     report = subparsers.add_parser("report", help="per-crop and per-year tables and figures for a finished run")
     report.add_argument("--run-dir", required=True)
     return parser
@@ -59,6 +65,9 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
     elif args.command == "shift":
         run_shift(args.input, args.output_dir, alpha=args.alpha, clean=not args.no_clean, seed=args.seed)
         print((Path(args.output_dir) / "shift_report.md").read_text(encoding="utf-8"))
+    elif args.command == "diagnose":
+        run_diagnose(args.input, args.output_dir, alpha=args.alpha)
+        print((Path(args.output_dir) / "diagnose_report.md").read_text(encoding="utf-8"))
     elif args.command == "report":
         build_report(args.run_dir)
         print((Path(args.run_dir) / "report.md").read_text(encoding="utf-8"))

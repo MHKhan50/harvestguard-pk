@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1 (2026-11-11)
+
+- New `diagnose` command (exploratory, added after the shift results): calibration vs test composition by province and years of history, and province-wise (Mondrian) intervals.
+
 ## 0.3.0 (2026-11-11)
 
 - New `shift` command: label cleaning (aggregate labels removed, case duplicates merged), interval coverage by target year and province, and five recalibration methods using only earlier years (rolling, expanding, refit-rolling, adaptive alpha with two fixed gammas), with district-crop group bootstrap intervals.

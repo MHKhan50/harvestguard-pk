@@ -40,5 +40,14 @@
     "aci_update": "alpha_{t+1} = alpha_t + gamma * (alpha - yearly miscoverage_t), gamma in {0.1, 0.5}, both reported",
     "primary_metric": "overall test coverage with 95% district-crop group bootstrap CI (500 replicates); secondary: mean width, coverage by year and province",
     "alpha": 0.1
+  },
+  "exploratory_diagnosis": {
+    "added": "2026-11-11, after seeing the shift results; exploratory, not pre-specified",
+    "questions": [
+      "why fixed coverage is already low in 2020-21: calibration vs test composition by province and by years of history",
+      "province-wise (Mondrian) conformal radius, fixed and rolling four-year calibration"
+    ],
+    "min_group_residuals": 50,
+    "fallback": "pooled radius"
   }
 }

@@ -24,3 +24,4 @@ outputs/pbs/*
 !outputs/pbs_shift/
 !outputs/pbs_shift_raw/
 outputs/pbs_shift/figures/.DS_Store
+!outputs/pbs_diagnose/
