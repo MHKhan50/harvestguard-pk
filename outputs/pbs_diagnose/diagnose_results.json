@@ -1,0 +1,234 @@
+{
+  "exploratory": true,
+  "alpha": 0.1,
+  "min_group": 50,
+  "composition": {
+    "calibration_2016_2019": {
+      "by_province": {
+        "BALOCHISTAN": {
+          "examples": 3025,
+          "share": 0.1883,
+          "fixed_coverage": 0.9058
+        },
+        "ISLAMABAD CAPITAL TERRITORY": {
+          "examples": 92,
+          "share": 0.0057,
+          "fixed_coverage": 0.8804
+        },
+        "KHYBER PAKHTUNKHWA": {
+          "examples": 3254,
+          "share": 0.2025,
+          "fixed_coverage": 0.8694
+        },
+        "PUNJAB": {
+          "examples": 6728,
+          "share": 0.4187,
+          "fixed_coverage": 0.8848
+        },
+        "SINDH": {
+          "examples": 2970,
+          "share": 0.1848,
+          "fixed_coverage": 0.963
+        }
+      },
+      "by_series_age": {
+        "11-20": {
+          "examples": 363,
+          "share": 0.0226,
+          "fixed_coverage": 0.9118
+        },
+        "21+": {
+          "examples": 1203,
+          "share": 0.0749,
+          "fixed_coverage": 0.9061
+        },
+        "3-5": {
+          "examples": 3594,
+          "share": 0.2237,
+          "fixed_coverage": 0.8845
+        },
+        "6-10": {
+          "examples": 10909,
+          "share": 0.6789,
+          "fixed_coverage": 0.9041
+        }
+      }
+    },
+    "test_2020_2024": {
+      "by_province": {
+        "BALOCHISTAN": {
+          "examples": 4075,
+          "share": 0.2277,
+          "fixed_coverage": 0.6584
+        },
+        "ISLAMABAD CAPITAL TERRITORY": {
+          "examples": 21,
+          "share": 0.0012,
+          "fixed_coverage": 0.7619
+        },
+        "KHYBER PAKHTUNKHWA": {
+          "examples": 3951,
+          "share": 0.2208,
+          "fixed_coverage": 0.9003
+        },
+        "PUNJAB": {
+          "examples": 6205,
+          "share": 0.3467,
+          "fixed_coverage": 0.5997
+        },
+        "SINDH": {
+          "examples": 3644,
+          "share": 0.2036,
+          "fixed_coverage": 0.9495
+        }
+      },
+      "by_series_age": {
+        "11-20": {
+          "examples": 8588,
+          "share": 0.4799,
+          "fixed_coverage": 0.755
+        },
+        "21+": {
+          "examples": 1490,
+          "share": 0.0833,
+          "fixed_coverage": 0.8671
+        },
+        "3-5": {
+          "examples": 815,
+          "share": 0.0455,
+          "fixed_coverage": 0.6393
+        },
+        "6-10": {
+          "examples": 7003,
+          "share": 0.3913,
+          "fixed_coverage": 0.734
+        }
+      }
+    }
+  },
+  "mondrian": {
+    "overall": {
+      "pooled_fixed": {
+        "coverage": 0.7508,
+        "ci95_low": 0.7415,
+        "ci95_high": 0.7601,
+        "mean_width": 0.4775
+      },
+      "mondrian_fixed": {
+        "coverage": 0.7573,
+        "ci95_low": 0.7486,
+        "ci95_high": 0.7656,
+        "mean_width": 0.4779
+      },
+      "pooled_rolling4": {
+        "coverage": 0.8385,
+        "ci95_low": 0.8314,
+        "ci95_high": 0.8455,
+        "mean_width": 0.8615
+      },
+      "mondrian_rolling4": {
+        "coverage": 0.8486,
+        "ci95_low": 0.842,
+        "ci95_high": 0.8553,
+        "mean_width": 0.7882
+      }
+    },
+    "by_year": [
+      {
+        "target_year": 2020,
+        "pooled_fixed": 0.7182,
+        "mondrian_fixed": 0.7283,
+        "pooled_rolling4": 0.7182,
+        "mondrian_rolling4": 0.7283
+      },
+      {
+        "target_year": 2021,
+        "pooled_fixed": 0.7347,
+        "mondrian_fixed": 0.7397,
+        "pooled_rolling4": 0.8017,
+        "mondrian_rolling4": 0.8378
+      },
+      {
+        "target_year": 2022,
+        "pooled_fixed": 0.7106,
+        "mondrian_fixed": 0.7174,
+        "pooled_rolling4": 0.8165,
+        "mondrian_rolling4": 0.8266
+      },
+      {
+        "target_year": 2023,
+        "pooled_fixed": 0.7508,
+        "mondrian_fixed": 0.7549,
+        "pooled_rolling4": 0.8984,
+        "mondrian_rolling4": 0.9055
+      },
+      {
+        "target_year": 2024,
+        "pooled_fixed": 0.8358,
+        "mondrian_fixed": 0.8426,
+        "pooled_rolling4": 0.9436,
+        "mondrian_rolling4": 0.9313
+      }
+    ],
+    "by_province": {
+      "BALOCHISTAN": {
+        "examples": 4075,
+        "pooled_fixed": 0.6584,
+        "pooled_fixed_width": 0.4775,
+        "mondrian_fixed": 0.651,
+        "mondrian_fixed_width": 0.4576,
+        "pooled_rolling4": 0.7487,
+        "pooled_rolling4_width": 0.8703,
+        "mondrian_rolling4": 0.815,
+        "mondrian_rolling4_width": 1.1571
+      },
+      "ISLAMABAD CAPITAL TERRITORY": {
+        "examples": 21,
+        "pooled_fixed": 0.7619,
+        "pooled_fixed_width": 0.4775,
+        "mondrian_fixed": 0.8095,
+        "mondrian_fixed_width": 0.5556,
+        "pooled_rolling4": 0.8095,
+        "pooled_rolling4_width": 0.6933,
+        "mondrian_rolling4": 0.8095,
+        "mondrian_rolling4_width": 0.673
+      },
+      "KHYBER PAKHTUNKHWA": {
+        "examples": 3951,
+        "pooled_fixed": 0.9003,
+        "pooled_fixed_width": 0.4775,
+        "mondrian_fixed": 0.9289,
+        "mondrian_fixed_width": 0.6243,
+        "pooled_rolling4": 0.9387,
+        "pooled_rolling4_width": 0.8624,
+        "mondrian_rolling4": 0.9258,
+        "mondrian_rolling4_width": 0.592
+      },
+      "PUNJAB": {
+        "examples": 6205,
+        "pooled_fixed": 0.5997,
+        "pooled_fixed_width": 0.4775,
+        "mondrian_fixed": 0.6306,
+        "mondrian_fixed_width": 0.5216,
+        "pooled_rolling4": 0.7571,
+        "pooled_rolling4_width": 0.855,
+        "mondrian_rolling4": 0.7913,
+        "mondrian_rolling4_width": 0.9868
+      },
+      "SINDH": {
+        "examples": 3644,
+        "pooled_fixed": 0.9495,
+        "pooled_fixed_width": 0.4775,
+        "mondrian_fixed": 0.9056,
+        "mondrian_fixed_width": 0.2668,
+        "pooled_rolling4": 0.9687,
+        "pooled_rolling4_width": 0.8627,
+        "mondrian_rolling4": 0.9004,
+        "mondrian_rolling4_width": 0.2508
+      }
+    },
+    "fallback_to_pooled_provinces": [
+      "ISLAMABAD CAPITAL TERRITORY"
+    ]
+  }
+}
