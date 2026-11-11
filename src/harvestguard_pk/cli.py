@@ -11,6 +11,7 @@ from .experiment import run_experiment
 from .report import build_report
 from .shift import run_shift
 from .diagnose import run_diagnose
+from .area import run_area
 from .synthetic import generate_synthetic_panel
 
 
@@ -44,6 +45,12 @@ def build_parser() -> argparse.ArgumentParser:
     diag.add_argument("--output-dir", required=True)
     diag.add_argument("--alpha", type=float, default=0.10)
 
+    area = subparsers.add_parser("area", help="crop area trend for one district against its province")
+    area.add_argument("--input", required=True)
+    area.add_argument("--output-dir", required=True)
+    area.add_argument("--district", required=True)
+    area.add_argument("--crops", default="Cotton,Maize,Sugarcane,Sesamum,Rice")
+
     report = subparsers.add_parser("report", help="per-crop and per-year tables and figures for a finished run")
     report.add_argument("--run-dir", required=True)
     return parser
@@ -68,6 +75,9 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
     elif args.command == "diagnose":
         run_diagnose(args.input, args.output_dir, alpha=args.alpha)
         print((Path(args.output_dir) / "diagnose_report.md").read_text(encoding="utf-8"))
+    elif args.command == "area":
+        run_area(args.input, args.output_dir, args.district, args.crops.split(","))
+        print((Path(args.output_dir) / "area_report.md").read_text(encoding="utf-8"))
     elif args.command == "report":
         build_report(args.run_dir)
         print((Path(args.run_dir) / "report.md").read_text(encoding="utf-8"))
