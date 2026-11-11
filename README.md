@@ -71,6 +71,10 @@ Per-crop and per-year tables: [`outputs/pbs/report.md`](outputs/pbs/report.md). 
 
 ![Forecast error and yield-shock rate by target year](docs/figures/error_and_shocks_by_year.png)
 
+### Coverage under temporal shift (paper analysis)
+
+On the cleaned panel (70,225 rows, 98 crops; aggregate labels removed, one case duplicate merged), nominal 90% intervals cover 0.751 of 17,896 test yields (95% CI 0.741 to 0.760). Coverage is already 0.718 in 2020-21, and is 0.600 in Punjab and 0.658 in Balochistan against 0.950 in Sindh. Rolling four-year recalibration gives 0.839 with nearly double the width; adaptive conformal (gamma 0.5) gives 0.884 with very wide intervals in some years. Exploratory province-wise rolling calibration gives 0.849 with narrower intervals than pooled rolling. Reports: [`outputs/pbs_shift/shift_report.md`](outputs/pbs_shift/shift_report.md), [`outputs/pbs_diagnose/diagnose_report.md`](outputs/pbs_diagnose/diagnose_report.md). Paper draft: [`paper/main.pdf`](paper/main.pdf).
+
 **Known data issues in this run** (to be fixed before any paper): crop labels differ only by case in one pair ("Potato" and "potato"), and some labels are aggregates ("Fodders Total", "Other Rabi Vegetables") pooled with single crops. Dates and grapes have unusually large errors (RMSE above 1.1 for every forecaster), which may come from reporting or unit changes.
 
 Write-up: [Pakistan crop yield forecasts were 90% sure and right 75% of the time](https://masmatixinnovations.co.uk/insights/pakistan-crop-yield-forecast-intervals.html).
