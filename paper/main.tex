@@ -6,6 +6,7 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{caption}
+\usepackage[section]{placeins}
 \usepackage[numbers]{natbib}
 \usepackage[hidelinks]{hyperref}
 \input{tables/numbers}
@@ -35,6 +36,11 @@ We ask: \emph{when a split-conformal interval is calibrated on 2016--2019 and us
   \item A comparison of five recalibration methods and an exploratory province-wise variant, showing a clear trade-off between coverage and width.
 \end{enumerate}
 
+\section{Related work}
+\paragraph{Crop yield prediction.} Machine learning for crop yield prediction is a large field; \citet{klompenburg2020} review the features and algorithms used. For Pakistan, \citet{dempewolf2014} forecast wheat yield in Punjab province from vegetation-index time series and historic crop statistics. Much of this work is judged on point accuracy. We use deliberately simple point forecasters and focus on a different question: whether an interval forecast keeps its stated coverage in later years.
+
+\paragraph{Conformal prediction under shift.} Split-conformal prediction \citep{vovk2005,lei2018} guarantees coverage when calibration and test data are exchangeable. When they are not, \citet{barber2023} bound the loss of coverage and propose weighting calibration points, \citet{gibbs2021} update the miscoverage level online so that long-run coverage is restored, and \citet{zaffran2022} study this adaptive approach for time series, including how to choose its step size. Mondrian conformal prediction \citep{vovk2005} calibrates separately within groups. We apply simple versions of these ideas, rolling and expanding windows, a yearly adaptive update and province-wise calibration, to an annual administrative panel where only five test years are available.
+
 \section{Data}
 The source is the PBS district crop statistics in the machine-readable extract distributed by Data Darbar (file \texttt{crops\_district\_fy.parquet}, retrieved 10 November 2026, SHA-256 recorded in the repository). Each row is a district, crop and fiscal year with area, production and yield. Rows with missing values or unlabelled crops are dropped and never filled with zero, leaving \RowsIn{} rows for 122 districts.
 
@@ -52,7 +58,7 @@ Cleaning removes six aggregate labels (``Fodders Total'' and five ``Other \dots'
 \section{Results}
 \paragraph{Point forecasts.} Table~\ref{tab:forecast} shows that ridge has the lowest RMSE, while persistence has the lowest MAE: ridge mainly reduces large errors. The test shock rate, a yield at least 15\% below the previous three-year median, is \ShockRate\%.
 
-\begin{table}[h]
+\begin{table}[!htbp]
 \centering
 \caption{Point forecasts on the log-yield scale, test years 2020--21 to 2024--25 (\TestN{} forecasts, cleaned panel).}
 \label{tab:forecast}
@@ -61,14 +67,14 @@ Cleaning removes six aggregate labels (``Fodders Total'' and five ``Other \dots'
 
 \paragraph{Coverage.} The fixed interval covers \FixedCov{} of test yields against a nominal 0.90 (Table~\ref{tab:coverage}). Every recalibration method raises coverage, but none reaches 0.90 at a usable width. Rolling calibration reaches \RollCov{} and nearly doubles the width (0.477 to 0.862, a factor of about 1.54 either side of the forecast instead of 1.27). Retraining the model as well adds nothing over rolling calibration alone. ACI with $\gamma = 0.5$ reaches 0.884 overall, but it oscillates: after a poor year its level falls close to zero and the interval becomes very wide (Table~\ref{tab:year}).
 
-\begin{table}[h]
+\begin{table}[!htbp]
 \centering
 \caption{Test coverage of nominal 90\% intervals, 2020--21 to 2024--25. Width is the mean interval width on the log scale. The last two rows were added after the main results.}
 \label{tab:coverage}
 \input{tables/coverage}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[!htbp]
 \centering
 \small
 \caption{Coverage by target year, with interval widths in two years.}
@@ -76,7 +82,7 @@ Cleaning removes six aggregate labels (``Fodders Total'' and five ``Other \dots'
 \resizebox{\textwidth}{!}{\input{tables/by_year}}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{figures/coverage_by_year.pdf}
 \caption{Coverage by target year for selected methods. The dashed line is the nominal 0.90.}
@@ -86,7 +92,7 @@ Cleaning removes six aggregate labels (``Fodders Total'' and five ``Other \dots'
 \section{Where the guarantee fails}\label{sec:diag}
 Coverage is already 0.718 in 2020--21, the first test year, so the failure does not start with the 2022 floods. Table~\ref{tab:comp} compares the calibration and test sets. The mix did change: Punjab's share fell from 0.419 to 0.347, and the largest group of test forecasts (48\%) comes from series with 11--20 years of history, against 2\% in calibration. But coverage fell sharply within Punjab (0.885 to 0.600) and Balochistan (0.906 to 0.658), and within every series-length group, while Sindh (0.950) and Khyber Pakhtunkhwa (0.900) stayed at or above the nominal level. Holding the calibration-period shares fixed and using test-period coverage within groups gives \ReweightProv{} by province and \ReweightAge{} by series length, so the change in mix explains little of the gap.
 
-\begin{table}[h]
+\begin{table}[!htbp]
 \centering
 \caption{Calibration and test sets: share of forecasts and fixed-interval coverage within each group.}
 \label{tab:comp}
@@ -95,7 +101,7 @@ Coverage is already 0.718 in 2020--21, the first test year, so the failure does 
 
 Because the failure is province-specific, we tried province-wise radii (Table~\ref{tab:prov}). With fixed calibration this changes little (0.757), since Punjab's and Balochistan's calibration residuals were not unusually large. Combined with rolling calibration it reaches \MonRollCov{} with a mean width of 0.788, narrower than pooled rolling calibration (0.862), because Sindh and Khyber Pakhtunkhwa receive narrow intervals and Punjab and Balochistan wide ones. Punjab still reaches only 0.791.
 
-\begin{table}[h]
+\begin{table}[!htbp]
 \centering
 \small
 \caption{Coverage (mean width) by province. Islamabad has fewer than 50 calibration residuals and uses the pooled radius.}
@@ -106,7 +112,7 @@ Because the failure is province-specific, we tried province-wise radii (Table~\r
 \section{Discussion and limitations}
 For users of district crop forecasts in Pakistan, the main message is that a ``90\%'' interval calibrated on recent years can hold about three times in four, and much less in Punjab and Balochistan. Recalibrating every year on recent data, separately by province, is a cheap improvement and is what we would recommend over a fixed calibration, but it still under-covers.
 
-We did not test why Punjab and Balochistan changed. Two candidate explanations are worth testing. First, crop mix may have changed within districts, for example a move away from cotton in parts of South Punjab; this can be checked directly in the area columns of the panel. Second, irrigation has changed: Reuters reported in 2025 that around 650,000 tube wells in Pakistan run on solar power, and that the share of Punjab where the water table is below the critical 60 feet rose by about a quarter between 2020 and 2024 \citep{reuters2025}. Either could change yield variability in ways that a model and calibration fitted on earlier years do not capture.
+We did not test why Punjab and Balochistan changed. Two candidate explanations are worth testing. First, crop mix changed. In the same panel, the summed reported area of cotton in Punjab fell by 36\% between the 2011--15 and 2020--24 averages, while rice rose by 39\%, maize by 85\% and sesame roughly fivefold (\texttt{outputs/pbs\_area\_bahawalnagar}); a forecaster and calibration fitted on the earlier mix may not transfer. Second, irrigation has changed: Reuters reported in 2025 that around 650,000 tube wells in Pakistan run on solar power, and that the share of Punjab where the water table is below the critical 60 feet rose by about a quarter between 2020 and 2024 \citep{reuters2025}. Either could change yield variability in ways that a model and calibration fitted on earlier years do not capture.
 
 This study has limits. District yields are administrative estimates, and district boundaries and codes changed over four decades; some areas are missing from the extract. One pooled linear model covers very different crops, and no weather or satellite data are used, so better models may shrink the problem. Only five test years are available, and the province-wise analysis was added after seeing the results, so it needs confirmation on later years. Coverage is marginal over the test set; it does not guarantee coverage for any single crop or district. We do not identify causes of the shift, and our results are not official PBS estimates.
 
