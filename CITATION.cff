@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 title: "HarvestGuard-PK: Leakage-Safe District-Crop Yield Shock Forecasting for Pakistan"
-version: 0.2.0
-date-released: 2026-11-10
+version: 0.3.0
+date-released: 2026-11-11
 type: software
 authors:
   - family-names: "Hussain"

@@ -11,12 +11,34 @@
     "test_target_year_min": 2020,
     "test_target_year_max": 2024
   },
-  "models": ["persistence", "rolling_median_3", "pooled_ridge"],
+  "models": [
+    "persistence",
+    "rolling_median_3",
+    "pooled_ridge"
+  ],
   "primary_forecast_metric": "log_yield_rmse",
   "conformal_alpha_default": 0.1,
   "yield_shock_definition": "target_yield <= 0.85 * median(last_three_prior_observed_yields)",
   "bootstrap_unit": "district_crop_group",
   "bootstrap_replicates_default": 300,
   "random_seed_default": 17,
-  "synthetic_data_is_not_empirical": true
+  "synthetic_data_is_not_empirical": true,
+  "shift_protocol": {
+    "fixed_before_real_run": "2026-11-11",
+    "question": "Does split-conformal coverage hold year by year in 2020-2024, and does recalibration using only earlier years restore it?",
+    "cleaning": "drop crop labels matching 'total' or starting with 'other'; merge labels differing only by case or spacing into the id with most rows; on district-year overlap keep the dominant id's row",
+    "sensitivity": "same analysis without cleaning",
+    "methods": [
+      "fixed",
+      "rolling4",
+      "expanding",
+      "refit_rolling4",
+      "aci_g0.1",
+      "aci_g0.5"
+    ],
+    "window_years": 4,
+    "aci_update": "alpha_{t+1} = alpha_t + gamma * (alpha - yearly miscoverage_t), gamma in {0.1, 0.5}, both reported",
+    "primary_metric": "overall test coverage with 95% district-crop group bootstrap CI (500 replicates); secondary: mean width, coverage by year and province",
+    "alpha": 0.1
+  }
 }

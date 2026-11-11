@@ -21,3 +21,6 @@ outputs/pbs/*
 !outputs/pbs/report.md
 !outputs/pbs/report.json
 !outputs/pbs/figures/
+!outputs/pbs_shift/
+!outputs/pbs_shift_raw/
+outputs/pbs_shift/figures/.DS_Store
