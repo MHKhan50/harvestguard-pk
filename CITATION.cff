@@ -3,6 +3,7 @@ message: "If you use this software, please cite it as below."
 title: "HarvestGuard-PK: Leakage-Safe District-Crop Yield Shock Forecasting for Pakistan"
 version: 0.3.1
 date-released: 2026-11-11
+doi: 10.5281/zenodo.24138382
 type: software
 authors:
   - family-names: "Hussain"

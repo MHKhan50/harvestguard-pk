@@ -2,7 +2,9 @@
 
 **Leakage-safe district-crop yield shock forecasting and uncertainty benchmark for Pakistan**
 
-> The bundled CSV is synthetic and only for tests. Real-data results will be added below after the run on the PBS-derived panel; none are claimed yet.
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24138382.svg)](https://doi.org/10.5281/zenodo.24138382)
+
+> The bundled CSV `data/synthetic_crop_panel.csv` is synthetic and only for tests. All results below come from the PBS-derived panel downloaded by `fetch-pbs`.
 
 ## Research objective
 
@@ -105,4 +107,4 @@ The model estimates district–crop yield from historical statistical panels. It
 
 ## Citation
 
-See `CITATION.cff`. Cite PBS as the original statistical source and the Data Darbar extract as the machine-readable packaging when using that extract. Cite the specific release and retrieval date in any resulting paper or dataset card.
+Software release v0.3.1 is archived on Zenodo: https://doi.org/10.5281/zenodo.24138382. See `CITATION.cff`. Cite PBS as the original statistical source and the Data Darbar extract as the machine-readable packaging when using that extract. Cite the specific release and retrieval date in any resulting paper or dataset card.
