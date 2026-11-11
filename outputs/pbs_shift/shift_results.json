@@ -1,0 +1,304 @@
+{
+  "input_csv": "data/pbs_crop_panel.csv",
+  "cleaned": true,
+  "alpha": 0.1,
+  "seed": 17,
+  "methods": [
+    "fixed",
+    "rolling4",
+    "expanding",
+    "refit_rolling4",
+    "aci_g0.1",
+    "aci_g0.5"
+  ],
+  "window_years": 4,
+  "aci_gammas": [
+    0.1,
+    0.5
+  ],
+  "cleaning": {
+    "rows_in": 74803,
+    "rows_out": 70225,
+    "aggregate_labels_excluded": {
+      "Fodders Total": 1433,
+      "Other Condiments": 115,
+      "Other Kharif Fruits": 586,
+      "Other Kharif Vegetables": 741,
+      "Other Rabi Fruits": 687,
+      "Other Rabi Vegetables": 793
+    },
+    "aggregate_rows_excluded": 4355,
+    "case_merged_labels": [
+      {
+        "normalised_label": "potato",
+        "kept_id": "8",
+        "kept_label": "Potato",
+        "merged": {
+          "123": "potato"
+        },
+        "rows_by_id": {
+          "8": 1092,
+          "123": 516
+        }
+      }
+    ],
+    "overlapping_rows_dropped": 223,
+    "crops_out": 98
+  },
+  "forecast": {
+    "test_examples": 17896,
+    "shock_rate": 0.1004,
+    "persistence": {
+      "rmse": 0.46427301058585,
+      "mae": 0.19791046669257023
+    },
+    "rolling_median": {
+      "rmse": 0.4458813064557074,
+      "mae": 0.2127118409740296
+    },
+    "pooled_ridge": {
+      "rmse": 0.4118895916821461,
+      "mae": 0.206372524599188
+    },
+    "shock_alerts_persistence": {
+      "precision": 0.37699412258606213,
+      "recall": 0.2498608792431831,
+      "f1": 0.3005354752342704,
+      "alert_rate": 0.06655118462226196,
+      "positive_rate": 0.10041350022351364
+    },
+    "shock_alerts_ridge": {
+      "precision": 0.3148614609571788,
+      "recall": 0.13912075681691707,
+      "f1": 0.19297568506368196,
+      "alert_rate": 0.04436745641484131,
+      "positive_rate": 0.10041350022351364
+    }
+  },
+  "coverage": {
+    "nominal_coverage": 0.9,
+    "test_examples": 17896,
+    "overall": {
+      "fixed": {
+        "coverage": 0.7508,
+        "ci95_low": 0.7409,
+        "ci95_high": 0.7598,
+        "mean_width": 0.4775
+      },
+      "rolling4": {
+        "coverage": 0.8385,
+        "ci95_low": 0.8307,
+        "ci95_high": 0.845,
+        "mean_width": 0.8615
+      },
+      "expanding": {
+        "coverage": 0.8138,
+        "ci95_low": 0.806,
+        "ci95_high": 0.8211,
+        "mean_width": 0.6924
+      },
+      "refit_rolling4": {
+        "coverage": 0.837,
+        "ci95_low": 0.83,
+        "ci95_high": 0.8432,
+        "mean_width": 0.8505
+      },
+      "aci_g0.1": {
+        "coverage": 0.8015,
+        "ci95_low": 0.7942,
+        "ci95_high": 0.8082,
+        "mean_width": 0.6461
+      },
+      "aci_g0.5": {
+        "coverage": 0.8845,
+        "ci95_low": 0.8792,
+        "ci95_high": 0.8894,
+        "mean_width": 1.7904
+      }
+    },
+    "by_province": {
+      "BALOCHISTAN": {
+        "examples": 4075,
+        "fixed": 0.6584,
+        "rolling4": 0.7487,
+        "refit_rolling4": 0.744
+      },
+      "ISLAMABAD CAPITAL TERRITORY": {
+        "examples": 21,
+        "fixed": 0.7619,
+        "rolling4": 0.8095,
+        "refit_rolling4": 0.8095
+      },
+      "KHYBER PAKHTUNKHWA": {
+        "examples": 3951,
+        "fixed": 0.9003,
+        "rolling4": 0.9387,
+        "refit_rolling4": 0.9393
+      },
+      "PUNJAB": {
+        "examples": 6205,
+        "fixed": 0.5997,
+        "rolling4": 0.7571,
+        "refit_rolling4": 0.7562
+      },
+      "SINDH": {
+        "examples": 3644,
+        "fixed": 0.9495,
+        "rolling4": 0.9687,
+        "refit_rolling4": 0.9679
+      }
+    }
+  },
+  "coverage_by_year": [
+    {
+      "target_year": 2020,
+      "examples": 3261,
+      "fixed": {
+        "coverage": 0.7182,
+        "width": 0.4775
+      },
+      "rolling4": {
+        "coverage": 0.7182,
+        "width": 0.4775
+      },
+      "expanding": {
+        "coverage": 0.7182,
+        "width": 0.4775
+      },
+      "refit_rolling4": {
+        "coverage": 0.7182,
+        "width": 0.4775
+      },
+      "aci_g0.1": {
+        "coverage": 0.7182,
+        "width": 0.4775,
+        "alpha_used": 0.1
+      },
+      "aci_g0.5": {
+        "coverage": 0.7182,
+        "width": 0.4775,
+        "alpha_used": 0.1
+      }
+    },
+    {
+      "target_year": 2021,
+      "examples": 3626,
+      "fixed": {
+        "coverage": 0.7347,
+        "width": 0.4775
+      },
+      "rolling4": {
+        "coverage": 0.8017,
+        "width": 0.6675
+      },
+      "expanding": {
+        "coverage": 0.7852,
+        "width": 0.6122
+      },
+      "refit_rolling4": {
+        "coverage": 0.802,
+        "width": 0.6665
+      },
+      "aci_g0.1": {
+        "coverage": 0.7628,
+        "width": 0.5501,
+        "alpha_used": 0.0818
+      },
+      "aci_g0.5": {
+        "coverage": 0.9879,
+        "width": 2.231,
+        "alpha_used": 0.0091
+      }
+    },
+    {
+      "target_year": 2022,
+      "examples": 3673,
+      "fixed": {
+        "coverage": 0.7106,
+        "width": 0.4775
+      },
+      "rolling4": {
+        "coverage": 0.8165,
+        "width": 0.846
+      },
+      "expanding": {
+        "coverage": 0.7846,
+        "width": 0.7103
+      },
+      "refit_rolling4": {
+        "coverage": 0.814,
+        "width": 0.8307
+      },
+      "aci_g0.1": {
+        "coverage": 0.765,
+        "width": 0.6344,
+        "alpha_used": 0.0681
+      },
+      "aci_g0.5": {
+        "coverage": 0.7983,
+        "width": 0.7631,
+        "alpha_used": 0.053
+      }
+    },
+    {
+      "target_year": 2023,
+      "examples": 3651,
+      "fixed": {
+        "coverage": 0.7508,
+        "width": 0.4775
+      },
+      "rolling4": {
+        "coverage": 0.8984,
+        "width": 1.0795
+      },
+      "expanding": {
+        "coverage": 0.8568,
+        "width": 0.8041
+      },
+      "refit_rolling4": {
+        "coverage": 0.8948,
+        "width": 1.0598
+      },
+      "aci_g0.1": {
+        "coverage": 0.8431,
+        "width": 0.7497,
+        "alpha_used": 0.0546
+      },
+      "aci_g0.5": {
+        "coverage": 0.9932,
+        "width": 4.5597,
+        "alpha_used": 0.0022
+      }
+    },
+    {
+      "target_year": 2024,
+      "examples": 3685,
+      "fixed": {
+        "coverage": 0.8358,
+        "width": 0.4775
+      },
+      "rolling4": {
+        "coverage": 0.9436,
+        "width": 1.1917
+      },
+      "expanding": {
+        "coverage": 0.9129,
+        "width": 0.833
+      },
+      "refit_rolling4": {
+        "coverage": 0.9422,
+        "width": 1.1743
+      },
+      "aci_g0.1": {
+        "coverage": 0.9083,
+        "width": 0.7988,
+        "alpha_used": 0.0489
+      },
+      "aci_g0.5": {
+        "coverage": 0.9083,
+        "width": 0.7989,
+        "alpha_used": 0.0488
+      }
+    }
+  ]
+}

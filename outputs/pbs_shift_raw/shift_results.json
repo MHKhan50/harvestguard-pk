@@ -1,0 +1,276 @@
+{
+  "input_csv": "data/pbs_crop_panel.csv",
+  "cleaned": false,
+  "alpha": 0.1,
+  "seed": 17,
+  "methods": [
+    "fixed",
+    "rolling4",
+    "expanding",
+    "refit_rolling4",
+    "aci_g0.1",
+    "aci_g0.5"
+  ],
+  "window_years": 4,
+  "aci_gammas": [
+    0.1,
+    0.5
+  ],
+  "cleaning": null,
+  "forecast": {
+    "test_examples": 19177,
+    "shock_rate": 0.1035,
+    "persistence": {
+      "rmse": 0.4639421305385049,
+      "mae": 0.20012543029021287
+    },
+    "rolling_median": {
+      "rmse": 0.448285193461141,
+      "mae": 0.21662528953878707
+    },
+    "pooled_ridge": {
+      "rmse": 0.4136100557285842,
+      "mae": 0.2093048900781976
+    },
+    "shock_alerts_persistence": {
+      "precision": 0.3919442292796282,
+      "recall": 0.254911838790932,
+      "f1": 0.3089133089133089,
+      "alert_rate": 0.0673202273556865,
+      "positive_rate": 0.10350941231683788
+    },
+    "shock_alerts_ridge": {
+      "precision": 0.3378712871287129,
+      "recall": 0.13753148614609573,
+      "f1": 0.1954887218045113,
+      "alert_rate": 0.04213380612191688,
+      "positive_rate": 0.10350941231683788
+    }
+  },
+  "coverage": {
+    "nominal_coverage": 0.9,
+    "test_examples": 19177,
+    "overall": {
+      "fixed": {
+        "coverage": 0.7457,
+        "ci95_low": 0.7371,
+        "ci95_high": 0.7543,
+        "mean_width": 0.4767
+      },
+      "rolling4": {
+        "coverage": 0.8378,
+        "ci95_low": 0.8301,
+        "ci95_high": 0.8446,
+        "mean_width": 0.8793
+      },
+      "expanding": {
+        "coverage": 0.811,
+        "ci95_low": 0.8032,
+        "ci95_high": 0.8188,
+        "mean_width": 0.7009
+      },
+      "refit_rolling4": {
+        "coverage": 0.8369,
+        "ci95_low": 0.8307,
+        "ci95_high": 0.844,
+        "mean_width": 0.8698
+      },
+      "aci_g0.1": {
+        "coverage": 0.7993,
+        "ci95_low": 0.7916,
+        "ci95_high": 0.807,
+        "mean_width": 0.6563
+      },
+      "aci_g0.5": {
+        "coverage": 0.8833,
+        "ci95_low": 0.8782,
+        "ci95_high": 0.8877,
+        "mean_width": 2.0256
+      }
+    },
+    "by_province": {
+      "BALOCHISTAN": {
+        "examples": 4289,
+        "fixed": 0.6533,
+        "rolling4": 0.7494,
+        "refit_rolling4": 0.7459
+      },
+      "ISLAMABAD CAPITAL TERRITORY": {
+        "examples": 29,
+        "fixed": 0.6897,
+        "rolling4": 0.7586,
+        "refit_rolling4": 0.7586
+      },
+      "KHYBER PAKHTUNKHWA": {
+        "examples": 4348,
+        "fixed": 0.894,
+        "rolling4": 0.9358,
+        "refit_rolling4": 0.9372
+      },
+      "PUNJAB": {
+        "examples": 6686,
+        "fixed": 0.5923,
+        "rolling4": 0.7552,
+        "refit_rolling4": 0.7546
+      },
+      "SINDH": {
+        "examples": 3825,
+        "fixed": 0.9495,
+        "rolling4": 0.9707,
+        "refit_rolling4": 0.9694
+      }
+    }
+  },
+  "coverage_by_year": [
+    {
+      "target_year": 2020,
+      "examples": 3370,
+      "fixed": {
+        "coverage": 0.7101,
+        "width": 0.4767
+      },
+      "rolling4": {
+        "coverage": 0.7101,
+        "width": 0.4767
+      },
+      "expanding": {
+        "coverage": 0.7101,
+        "width": 0.4767
+      },
+      "refit_rolling4": {
+        "coverage": 0.7101,
+        "width": 0.4767
+      },
+      "aci_g0.1": {
+        "coverage": 0.7101,
+        "width": 0.4767,
+        "alpha_used": 0.1
+      },
+      "aci_g0.5": {
+        "coverage": 0.7101,
+        "width": 0.4767,
+        "alpha_used": 0.1
+      }
+    },
+    {
+      "target_year": 2021,
+      "examples": 3817,
+      "fixed": {
+        "coverage": 0.7302,
+        "width": 0.4767
+      },
+      "rolling4": {
+        "coverage": 0.7988,
+        "width": 0.6681
+      },
+      "expanding": {
+        "coverage": 0.781,
+        "width": 0.6125
+      },
+      "refit_rolling4": {
+        "coverage": 0.8006,
+        "width": 0.6694
+      },
+      "aci_g0.1": {
+        "coverage": 0.7616,
+        "width": 0.5567,
+        "alpha_used": 0.081
+      },
+      "aci_g0.5": {
+        "coverage": 0.9971,
+        "width": 3.276,
+        "alpha_used": 0.005
+      }
+    },
+    {
+      "target_year": 2022,
+      "examples": 3983,
+      "fixed": {
+        "coverage": 0.7068,
+        "width": 0.4767
+      },
+      "rolling4": {
+        "coverage": 0.8195,
+        "width": 0.8631
+      },
+      "expanding": {
+        "coverage": 0.7838,
+        "width": 0.7158
+      },
+      "refit_rolling4": {
+        "coverage": 0.8192,
+        "width": 0.8468
+      },
+      "aci_g0.1": {
+        "coverage": 0.7655,
+        "width": 0.645,
+        "alpha_used": 0.0672
+      },
+      "aci_g0.5": {
+        "coverage": 0.7961,
+        "width": 0.7586,
+        "alpha_used": 0.0536
+      }
+    },
+    {
+      "target_year": 2023,
+      "examples": 3946,
+      "fixed": {
+        "coverage": 0.7522,
+        "width": 0.4767
+      },
+      "rolling4": {
+        "coverage": 0.9014,
+        "width": 1.1019
+      },
+      "expanding": {
+        "coverage": 0.8578,
+        "width": 0.8143
+      },
+      "refit_rolling4": {
+        "coverage": 0.8969,
+        "width": 1.0861
+      },
+      "aci_g0.1": {
+        "coverage": 0.8436,
+        "width": 0.7578,
+        "alpha_used": 0.0537
+      },
+      "aci_g0.5": {
+        "coverage": 0.9944,
+        "width": 4.6799,
+        "alpha_used": 0.0016
+      }
+    },
+    {
+      "target_year": 2024,
+      "examples": 4061,
+      "fixed": {
+        "coverage": 0.822,
+        "width": 0.4767
+      },
+      "rolling4": {
+        "coverage": 0.9367,
+        "width": 1.2118
+      },
+      "expanding": {
+        "coverage": 0.9042,
+        "width": 0.8451
+      },
+      "refit_rolling4": {
+        "coverage": 0.9352,
+        "width": 1.197
+      },
+      "aci_g0.1": {
+        "coverage": 0.899,
+        "width": 0.8114,
+        "alpha_used": 0.0481
+      },
+      "aci_g0.5": {
+        "coverage": 0.8976,
+        "width": 0.7991,
+        "alpha_used": 0.0488
+      }
+    }
+  ]
+}
