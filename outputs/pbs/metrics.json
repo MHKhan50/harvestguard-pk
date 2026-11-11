@@ -1,0 +1,64 @@
+{
+  "alpha": 0.1,
+  "conformal_interval": {
+    "calibration_radius_log_scale": 0.23835960939052703,
+    "empirical_test_coverage": 0.7457370808781353,
+    "mean_width_log_scale": 0.47671921878105405,
+    "nominal_coverage": 0.9
+  },
+  "feature_names": [
+    "lag1_log_yield",
+    "lag2_log_yield",
+    "rolling3_log_median",
+    "lag1_log_area",
+    "lagged_log_area_growth",
+    "province_crop_log_median",
+    "target_year_scaled",
+    "gap_years_lag1",
+    "gap_years_lag2"
+  ],
+  "forecast_log_scale": {
+    "persistence": {
+      "mae": 0.20012543029021287,
+      "rmse": 0.4639421305385049
+    },
+    "pooled_ridge": {
+      "mae": 0.2093048900781976,
+      "rmse": 0.4136100557285842
+    },
+    "rolling_median": {
+      "mae": 0.21662528953878707,
+      "rmse": 0.448285193461141
+    }
+  },
+  "interpretation": "Scores depend on the supplied input. Synthetic-input results are software smoke tests only, not empirical Pakistan findings.",
+  "pooled_ridge_yield_scale_rmse_t_per_ha": 15.367189703334745,
+  "protocol": "train<=2015; calibration=2016-2019; test=2020-2024",
+  "ridge_minus_rolling_median_rmse_group_bootstrap_95pct": {
+    "ci95_high": -0.026695680903048746,
+    "ci95_low": -0.04323894446232701,
+    "groups": 4816,
+    "replicates": 300
+  },
+  "sample_counts": {
+    "calibration": 17095,
+    "panel_rows_after_validation": 74803,
+    "supervised_examples": 56643,
+    "test": 19177,
+    "train": 20371
+  },
+  "yield_shock": {
+    "alert_rate": 0.04213380612191688,
+    "f1": 0.1954887218045113,
+    "positive_rate": 0.10350941231683788,
+    "precision": 0.3378712871287129,
+    "recall": 0.13753148614609573
+  },
+  "yield_shock_persistence_alert": {
+    "alert_rate": 0.0673202273556865,
+    "f1": 0.3089133089133089,
+    "positive_rate": 0.10350941231683788,
+    "precision": 0.3919442292796282,
+    "recall": 0.254911838790932
+  }
+}

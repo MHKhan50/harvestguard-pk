@@ -52,9 +52,28 @@ python -m harvestguard_pk.cli report --run-dir outputs/pbs
 
 Synthetic smoke run (no download): `sh examples/run_synthetic.sh`. Its numbers say nothing about Pakistan.
 
-## Results
+## Results (PBS-derived panel, run on 10 November 2026)
 
-Pending: the real-data run on the PBS-derived panel has not been done yet. This section will hold the forecast table, conformal coverage, shock alert scores and the two figures from `outputs/pbs/`.
+Data: `crops_district_fy.parquet` from Data Darbar, retrieved 2026-11-10 16:19 UTC, SHA-256 `ea13fc2a7c4d7b79e0f96a9964bfec25982f40f6cef75b9ed34768189e44cddd`. After filtering: 74,803 valid rows, 122 districts, 105 crop labels, fiscal years 1981-82 to 2024-25 ([`data/pbs_crop_panel.provenance.json`](data/pbs_crop_panel.provenance.json)). Forecast examples: train 20,371, calibration 17,095, test 19,177.
+
+| Forecaster | RMSE (log yield) | MAE (log yield) |
+|---|---|---|
+| Persistence (last year) | 0.4639 | **0.2001** |
+| Rolling median (3 years) | 0.4483 | 0.2166 |
+| Pooled ridge | **0.4136** | 0.2093 |
+
+- Ridge minus rolling-median RMSE: 95% group-bootstrap CI -0.0432 to -0.0267, so ridge has the lowest RMSE. Persistence has the lowest MAE: ridge mainly reduces the large misses.
+- **Conformal interval under-covers:** nominal 90%, empirical test coverage 74.6% (mean width 0.477 on the log scale). The calibration years (2016-2019) did not represent the test years.
+- **Yield shocks** (15% or more below the previous three-year median) were 10.4% of test rows. Persistence alerts: precision 0.392, recall 0.255, F1 0.309. Ridge alerts: precision 0.338, recall 0.138, F1 0.195.
+- By target year, the shock rate was 16.8% in 2022-23 against 7.6% to 10.5% in the other test years, and every forecaster had its highest or second-highest error that year. In 2023-24 persistence carried the bad year forward (RMSE 0.585 against 0.413 for ridge and rolling median).
+
+Per-crop and per-year tables: [`outputs/pbs/report.md`](outputs/pbs/report.md). Full metrics: [`outputs/pbs/metrics.json`](outputs/pbs/metrics.json).
+
+![Forecast error and yield-shock rate by target year](docs/figures/error_and_shocks_by_year.png)
+
+**Known data issues in this run** (to be fixed before any paper): crop labels differ only by case in one pair ("Potato" and "potato"), and some labels are aggregates ("Fodders Total", "Other Rabi Vegetables") pooled with single crops. Dates and grapes have unusually large errors (RMSE above 1.1 for every forecaster), which may come from reporting or unit changes.
+
+Write-up: [Pakistan crop yield forecasts were 90% sure and right 75% of the time](https://masmatixinnovations.co.uk/insights/pakistan-crop-yield-forecast-intervals.html).
 
 ## Limitations
 

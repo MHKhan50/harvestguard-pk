@@ -1,0 +1,18 @@
+{
+  "alpha": 0.1,
+  "data_status": "input-dependent; inspect source provenance before treating results as official-data evidence",
+  "feature_names": [
+    "lag1_log_yield",
+    "lag2_log_yield",
+    "rolling3_log_median",
+    "lag1_log_area",
+    "lagged_log_area_growth",
+    "province_crop_log_median",
+    "target_year_scaled",
+    "gap_years_lag1",
+    "gap_years_lag2"
+  ],
+  "input_csv": "data/pbs_crop_panel.csv",
+  "protocol": "train<=2015; calibration=2016-2019; test=2020-2024",
+  "seed": 17
+}

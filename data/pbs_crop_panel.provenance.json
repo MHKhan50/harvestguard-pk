@@ -1,0 +1,12 @@
+{
+  "source_url": "https://darbar.adaad.org/data/warehouse/crops_district_fy.parquet",
+  "retrieved_utc": "2026-11-10T16:19:32Z",
+  "source_sha256": "ea13fc2a7c4d7b79e0f96a9964bfec25982f40f6cef75b9ed34768189e44cddd",
+  "source_bytes": 743950,
+  "csv_rows": 78023,
+  "valid_rows_after_filtering": 74803,
+  "districts": 122,
+  "crops": 105,
+  "first_fiscal_year": 1981,
+  "last_fiscal_year": 2024
+}
