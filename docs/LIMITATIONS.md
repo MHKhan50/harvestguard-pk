@@ -10,5 +10,5 @@
 8. **Pooled model heterogeneity:** crop types and agro-ecological zones differ substantially. A single pooled ridge model is a baseline research design, not necessarily the best agronomic model.
 9. **Shock threshold is operational:** the 15% decline from the prior-three-observation median is a benchmark label, not an official food-security threshold. Sensitivity analyses are needed.
 10. **No farm-level advice:** outputs are district–crop statistical alerts, not recommendations for individual farmers, planting dates, input use or procurement decisions.
-11. **No climate covariates:** the v0.1.0 protocol deliberately focuses on leakage-safe historical yield-panel prediction. It does not estimate climate effects. Adding weather/remote-sensing features requires separate source validation and a new preregistered protocol.
+11. **No climate covariates:** the main protocol deliberately focuses on leakage-safe historical yield-panel prediction. It does not estimate climate effects. Adding weather/remote-sensing features requires separate source validation and a new preregistered protocol.
 12. **Synthetic smoke data:** synthetic metrics validate code execution only and must never be reported as evidence of forecast skill in Pakistan.

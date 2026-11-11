@@ -8,7 +8,7 @@ authors:
   - family-names: "Hussain"
     given-names: "Muzammal"
     orcid: "https://orcid.org/0009-0001-2570-5686"
-repository-code: "https://github.com/MHKhan50/harvestguard-pk-v0.1.0"
+repository-code: "https://github.com/MHKhan50/harvestguard-pk"
 license: MIT
 abstract: >-
   A leakage-safe benchmark for one-year-ahead district-crop yield forecasting,
