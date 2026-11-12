@@ -116,7 +116,7 @@ def _plot(by_year: Sequence[Dict[str, object]], by_crop: Sequence[Dict[str, obje
         print("matplotlib not installed; skipping figures (pip install -r requirements.txt)")
         return
     out.mkdir(parents=True, exist_ok=True)
-    colours = {"persistence": "#8a94a8", "rolling_median": "#2b5ce6", "pooled_ridge": "#0f1932"}
+    colours = {"persistence": "#8a94a8", "rolling_median": "#E3A800", "pooled_ridge": "#1F4E9C"}
     fig, ax = plt.subplots(figsize=(7, 4))
     years = [int(str(e["target_year"])) for e in by_year]
     for label, _ in FORECASTERS:
